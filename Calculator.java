@@ -11,6 +11,8 @@ public class Calculator {
     Calculator(CharacterList tokenList) {
         stack = new Stack<>();
         this.tokenList = tokenList;
+        tokenReader();
+        System.out.println(stack.peek().getDoubleToken());
     }
 
     private void tokenReader() {
@@ -20,12 +22,14 @@ public class Calculator {
             } else if (tokenList.get(i).getType() == 2) {
                 Token firstOperand = stack.pop();
                 Token secondOperand = stack.pop();
+                Token result = calculator(firstOperand,secondOperand,tokenList.get(i).getValue());
+                stack.push(result);
             }
         }
     }
 
 
-
+    // TODO works for the simple case only
     private Token calculator(Token firstOperand, Token secondOperand, String operator) {
         Token result;
         double firstOperandDoubleValue;
@@ -62,7 +66,7 @@ public class Calculator {
                 System.out.println("ERROR: invalid operation");
                 result = new Character(0);
         }
-
+        stack.push(result);
         return result;
     }
 }

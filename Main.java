@@ -19,19 +19,18 @@ public class Main implements CalculatorInterface {
         CharacterList result = new CharacterList();
         in = new Scanner(input);
         while (in.hasNext()) {
-            if (in.hasNextInt()) {
-                result.add(new Character(in.nextInt()));
-            } else if (in.hasNextDouble()) {
+            if (in.hasNextDouble()) {
                 result.add(new Character(in.nextDouble()));
             } else {
                 result.add(new Character(in.next()));
             }
         }
-        for (int i = 0; i < result.size(); i++) {
+        /*for (int i = 0; i < result.size(); i++) {
             out.println(String.valueOf(result.get(i).getType()));
             //out.println(result.get(i).getValue());
-        }
+        }*/
         in.close();
+        Calculator calc = new Calculator(result);
         return result;
     }
 
@@ -47,7 +46,8 @@ public class Main implements CalculatorInterface {
 
     private void start() {
         // While there is input, read line and parse it.
-        readTokens("1 + ( 2 - 3 )");
+        readTokens("2 3 ^");
+
     }
 
     public static void main(String[] argv) {

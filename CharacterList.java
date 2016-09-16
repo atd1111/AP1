@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Created by ATD on 13/09/2016.
  */
 public class CharacterList implements TokenList {
-
+    // TODO arraylist is a no go
     private ArrayList<Token> tokenList;
 
     CharacterList() {

@@ -28,11 +28,7 @@ public class Character implements Token {
 
     private void tokenParser(Object token) {
         if (typeFinder(token) == 1) {
-            if (token.getClass().getSimpleName().equals("Integer")) {
-                integerToken = (int) token;
-            } else {
-                doubleToken = (double) token;
-            }
+            doubleToken = (double) token;
         } else if (typeFinder(token) == 2) {
             operatorToken = (String) token;
         } else {
@@ -84,22 +80,6 @@ public class Character implements Token {
     public int getPrecedence() {
         return 0;
     }
-
-    /*public boolean isToken() {
-        if (typeFinder() == NUMBER_TYPE || typeFinder() == OPERATOR_TYPE || typeFinder() == PARENTHESIS_TYPE) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
-
-    /*public Object getToken() {
-        return token;
-    }*/
-
-    /*public String gitGud() {
-        return "gitgud";
-    }*/
 
     private int typeFinder(Object token) {
         //System.out.println("token type is: "+token.getClass().getSimpleName());
