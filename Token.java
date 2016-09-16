@@ -32,11 +32,11 @@ public interface Token {
      */
     int getPrecedence();
 
-    boolean isInt();
-
     boolean isDouble();
 
-    int getIntegerToken();
+    boolean tokenIsOperator(Object token);
+
+    boolean tokenIsParenthesis(Object token);
 
     double getDoubleToken();
 

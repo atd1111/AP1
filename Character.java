@@ -2,14 +2,14 @@
  * Created by ATD on 09/09/2016.
  */
 public class Character implements Token {
-
     private static final int    NUMBER_TYPE = 1,
                                 OPERATOR_TYPE = 2,
-                                PARENTHESIS_TYPE = 3;
-    private static final String[] OPERATOR_TOKENS = {"+","-","*","/","^"};
-    private static final String[] PARENTHESIS_TOKENS = {"(",")"};
+                                PARENTHESIS_TYPE = 3,
+                                NO_PRECEDENCE = -1;
+    private static final String[] OPERATOR_TOKENS = {"+","-","*","/","^"},
+                                  PARENTHESIS_TOKENS = {"(",")"};
+    private static final String[][] PRECEDENCE_MATRIX = {{"+","-"},{"*","/","^"},PARENTHESIS_TOKENS};
 
-    private int integerToken;
     private double doubleToken;
     private String operatorToken;
     private String parenthesisToken;
@@ -20,7 +20,6 @@ public class Character implements Token {
     }
 
     private void initializer() {
-        integerToken = 0;
         doubleToken = 0;
         operatorToken = "";
         parenthesisToken = "";
@@ -36,16 +35,8 @@ public class Character implements Token {
         }
     }
 
-    public boolean isInt() {
-        return integerToken != 0;
-    }
-
     public boolean isDouble() {
         return doubleToken != 0;
-    }
-
-    public int getIntegerToken() {
-        return integerToken;
     }
 
     public double getDoubleToken() {
@@ -54,9 +45,7 @@ public class Character implements Token {
 
     @Override
     public String getValue() {
-        if (integerToken != 0) {
-            return "" + integerToken;
-        } else if (doubleToken != 0) {
+        if (doubleToken != 0) {
             return "" + doubleToken;
         } else if (!operatorToken.isEmpty()) {
             return operatorToken;
@@ -67,7 +56,7 @@ public class Character implements Token {
 
     @Override
     public int getType() {
-        if (integerToken != 0 || doubleToken != 0) {
+        if (doubleToken != 0) {
             return 1;
         } else if (!operatorToken.isEmpty()) {
             return 2;
@@ -78,12 +67,21 @@ public class Character implements Token {
 
     @Override
     public int getPrecedence() {
-        return 0;
+        if (!operatorToken.isEmpty() || !parenthesisToken.isEmpty()) {
+            for (int i = 0; i < PRECEDENCE_MATRIX.length; i++) {
+                for (int j = 0; j < PRECEDENCE_MATRIX[0].length; j++) {
+                    if (PRECEDENCE_MATRIX[i][j].equals(operatorToken) || PRECEDENCE_MATRIX[i][j].equals(parenthesisToken)) {
+                        return i;  // the row of the matrix is the precedence order
+                    }
+                }
+            }
+        }
+        return NO_PRECEDENCE;
     }
 
     private int typeFinder(Object token) {
         //System.out.println("token type is: "+token.getClass().getSimpleName());
-        if (token.getClass().getSimpleName().equals("Integer") || token.getClass().getSimpleName().equals("Double")) {
+        if (token.getClass().getSimpleName().equals("Double")) {
             return NUMBER_TYPE;
         } else if (tokenIsOperator(token)) {
             return OPERATOR_TYPE;
@@ -94,7 +92,7 @@ public class Character implements Token {
         }
     }
 
-    private boolean tokenIsOperator(Object token) {
+    public boolean tokenIsOperator(Object token) {
         for (int i = 0; i < OPERATOR_TOKENS.length; i++) {
             if (OPERATOR_TOKENS[i].equals(token)) {
                 return true;
@@ -103,7 +101,7 @@ public class Character implements Token {
         return false;
     }
 
-    private boolean tokenIsParenthesis(Object token) {
+    public boolean tokenIsParenthesis(Object token) {
         for (int i = 0; i < PARENTHESIS_TOKENS.length; i++) {
             if (PARENTHESIS_TOKENS[i].equals(token)) {
                 return true;

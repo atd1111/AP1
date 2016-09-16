@@ -25,12 +25,12 @@ public class Main implements CalculatorInterface {
                 result.add(new Character(in.next()));
             }
         }
-        /*for (int i = 0; i < result.size(); i++) {
-            out.println(String.valueOf(result.get(i).getType()));
+        for (int i = 0; i < result.size(); i++) {
+            out.println(String.valueOf(result.get(i).getPrecedence()));
             //out.println(result.get(i).getValue());
-        }*/
+        }
         in.close();
-        Calculator calc = new Calculator(result);
+        //Calculator calc = new Calculator(result);
         return result;
     }
 
@@ -46,7 +46,7 @@ public class Main implements CalculatorInterface {
 
     private void start() {
         // While there is input, read line and parse it.
-        readTokens("2 3 ^");
+        readTokens("5 + ( ( 1 + 2 ) * 4 ) - 3");
 
     }
 

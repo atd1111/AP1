@@ -4,7 +4,6 @@ import java.util.Stack;
  * Created by ATD on 13/09/2016.
  */
 public class Calculator {
-
     private Stack<Token> stack;
     private CharacterList tokenList;
 
@@ -56,6 +55,7 @@ public class Calculator {
                 result = new Character(secondOperandDoubleValue / firstOperandDoubleValue);
                 break;
             case "^":
+                // TODO not quite right
                 firstOperandDoubleValue = firstOperand.getDoubleToken();
                 for (int i = 0; i < secondOperand.getDoubleToken() - 1; i++) {
                     firstOperandDoubleValue *= firstOperandDoubleValue;
