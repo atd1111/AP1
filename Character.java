@@ -11,6 +11,7 @@ public class Character implements Token {
     private static final String[][] PRECEDENCE_MATRIX = {{"+","-"},{"*","/","^"},PARENTHESIS_TOKENS};
 
     private double doubleToken;
+    private boolean isDouble;
     private String operatorToken;
     private String parenthesisToken;
 
@@ -21,6 +22,7 @@ public class Character implements Token {
 
     private void initializer() {
         doubleToken = 0;
+        isDouble = false;
         operatorToken = "";
         parenthesisToken = "";
     }
@@ -28,6 +30,7 @@ public class Character implements Token {
     private void tokenParser(Object token) {
         if (typeFinder(token) == 1) {
             doubleToken = (double) token;
+            isDouble = true;
         } else if (typeFinder(token) == 2) {
             operatorToken = (String) token;
         } else {
@@ -35,8 +38,8 @@ public class Character implements Token {
         }
     }
 
-    public boolean isDouble() {
-        return doubleToken != 0;
+    public boolean tokenIsDouble() {
+        return isDouble;
     }
 
     public double getDoubleToken() {
@@ -80,7 +83,6 @@ public class Character implements Token {
     }
 
     private int typeFinder(Object token) {
-        //System.out.println("token type is: "+token.getClass().getSimpleName());
         if (token.getClass().getSimpleName().equals("Double")) {
             return NUMBER_TYPE;
         } else if (tokenIsOperator(token)) {

@@ -32,7 +32,7 @@ public interface Token {
      */
     int getPrecedence();
 
-    boolean isDouble();
+    boolean tokenIsDouble();
 
     boolean tokenIsOperator(Object token);
 

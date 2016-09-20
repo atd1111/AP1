@@ -5,7 +5,7 @@ import java.util.Stack;
  */
 public class Calculator {
     private Stack<Token> stack;
-    private CharacterList tokenList;
+    private TokenList tokenList;
 
     Calculator(CharacterList tokenList) {
         stack = new Stack<>();
