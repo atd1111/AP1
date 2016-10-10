@@ -3,18 +3,12 @@ import java.util.Scanner;
 
 public class Main implements CalculatorInterface {
 
-    ShuntingYard shuntingYard;
     Scanner in;
     PrintStream out;
 
     Main() {
-       initializer();
-    }
-
-    private void initializer() {
         out = System.out;
     }
-
 
     public TokenList readTokens(String input) {
         TokenList result = new CharacterList();
@@ -26,34 +20,21 @@ public class Main implements CalculatorInterface {
                 result.add(new Character(in.next()));
             }
         }
-        for (int i = 0; i < result.size(); i++) {
-            //out.println(String.valueOf(result.get(i).getPrecedence()));
-            //out.printf(result.get(i).getValue());
-        }
         in.close();
-        //Calculator calc = new Calculator(result);
-        shuntingYard = new ShuntingYard(result);
-        TokenList rpn = shuntingYard.getOutput();
-        for (int i = 0; i < rpn.size(); i++) {
-            out.println(rpn.get(i).getValue());
-        }
         return result;
     }
 
     public Double rpn(TokenList tokens) {
-        // TODO: Implement this
-        return null;
+        return new Calculator(tokens).getResult().getDoubleToken();
     }
 
     public TokenList shuntingYard(TokenList tokens) {
-        // TODO: Implement this
-        return null;
+        return new ShuntingYard(tokens).getOutput();
     }
 
     private void start() {
         // While there is input, read line and parse it.
-        readTokens("9 + 24 / ( 7 - 3 )");
-
+        out.println("result: "+rpn(shuntingYard(readTokens("6 * 6 * ( 5 + 3 ) / 8 - 12 / 6 * 4"))));
     }
 
     public static void main(String[] argv) {

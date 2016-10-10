@@ -7,11 +7,11 @@ public class Calculator {
     private Stack<Token> stack;
     private TokenList tokenList;
 
-    Calculator(CharacterList tokenList) {
+    Calculator(TokenList tokenList) {
         stack = new Stack<>();
         this.tokenList = tokenList;
         tokenReader();
-        System.out.println(stack.peek().getDoubleToken());
+        //System.out.println(stack.peek().getDoubleToken());
     }
 
     private void tokenReader() {
@@ -66,7 +66,12 @@ public class Calculator {
                 System.out.println("ERROR: invalid operation");
                 result = new Character(0);
         }
-        stack.push(result);
+        //stack.push(result);
         return result;
+    }
+
+    public Token getResult() {
+        System.out.println("CALCULATOR stack size :"+stack.size());
+        return stack.peek();
     }
 }

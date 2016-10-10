@@ -45,8 +45,6 @@ public class CharacterList implements TokenList {
         }
     }
 
-    // {1,2,3,4,5,6,7,8}
-
     @Override
     public void set(int index, Token token) {
         //tokenList.set(index,token);
