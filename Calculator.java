@@ -4,6 +4,7 @@ import java.util.Stack;
  * Created by ATD on 13/09/2016.
  */
 public class Calculator {
+    //TODO operand stack should be used here
     private Stack<Token> stack;
     private TokenList tokenList;
 
@@ -11,7 +12,6 @@ public class Calculator {
         stack = new Stack<>();
         this.tokenList = tokenList;
         tokenReader();
-        //System.out.println(stack.peek().getDoubleToken());
     }
 
     private void tokenReader() {
@@ -27,8 +27,6 @@ public class Calculator {
         }
     }
 
-
-    // TODO works for the simple case only
     private Token calculator(Token firstOperand, Token secondOperand, String operator) {
         Token result;
         double firstOperandDoubleValue;
@@ -71,7 +69,6 @@ public class Calculator {
     }
 
     public Token getResult() {
-        System.out.println("CALCULATOR stack size :"+stack.size());
         return stack.peek();
     }
 }

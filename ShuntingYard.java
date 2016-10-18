@@ -18,7 +18,6 @@ public class ShuntingYard {
         SYAlgorithm(input);
     }
 
-    // "9 + 24 / ( 7 - 3 )"
 
     private void SYAlgorithm(TokenList input) {
         while (index < input.size()) {
