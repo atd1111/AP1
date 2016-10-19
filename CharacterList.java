@@ -2,8 +2,6 @@
  * Created by ATD on 13/09/2016.
  */
 public class CharacterList implements TokenList {
-    // TODO array list is a no go
-    //private ArrayList<Token> tokenList;
 
     private Token[] tokenArray;
 
@@ -26,9 +24,6 @@ public class CharacterList implements TokenList {
             tokenArray = tempArray1;
         } else {
             Token[] tempArray1 = copyArray(new Token[index], 0, index);
-            /*for (int i = 0; i < tempArray1.length; i++) {
-                System.out.println(tempArray1[i].getValue());
-            }*/
             Token[] tempArray2 = copyArray(new Token[tokenArray.length - index - 1], index + 1, tokenArray.length);
             Token[] tempArrayResult = new Token[tempArray1.length + tempArray2.length];
             System.arraycopy(tempArray1, 0, tempArrayResult, 0, tempArray1.length);

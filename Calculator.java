@@ -1,74 +1,81 @@
-import java.util.Stack;
-
 /**
  * Created by ATD on 13/09/2016.
  */
 public class Calculator {
-    //TODO operand stack should be used here
-    private Stack<Token> stack;
+    private static final int    NUMBER_TYPE = 1,
+                                OPERATOR_TYPE = 2;
+
+    private static final String PLUS = "+",
+                                MINUS = "-",
+                                PRODUCT = "*",
+                                DIVISION = "/",
+                                EXPONENT = "^";
+
+
+    private OperandStack stack;
     private TokenList tokenList;
 
     Calculator(TokenList tokenList) {
-        stack = new Stack<>();
+        //stack = new Stack<>();
+        stack = new OperandStack();
         this.tokenList = tokenList;
         tokenReader();
     }
 
     private void tokenReader() {
         for (int i = 0; i < tokenList.size(); i++) {
-            if (tokenList.get(i).getType() == 1) {
-                stack.push(tokenList.get(i));
-            } else if (tokenList.get(i).getType() == 2) {
-                Token firstOperand = stack.pop();
-                Token secondOperand = stack.pop();
-                Token result = calculator(firstOperand,secondOperand,tokenList.get(i).getValue());
+            if (tokenList.get(i).getType() == NUMBER_TYPE) {
+                stack.push(tokenList.get(i).getDoubleToken());
+            } else if (tokenList.get(i).getType() == OPERATOR_TYPE) {
+                Double firstOperand = stack.pop();
+                Double secondOperand = stack.pop();
+                Double result = calculator(firstOperand,secondOperand,tokenList.get(i).getValue());
                 stack.push(result);
             }
         }
     }
 
-    private Token calculator(Token firstOperand, Token secondOperand, String operator) {
-        Token result;
-        double firstOperandDoubleValue;
-        double secondOperandDoubleValue;
+    Double calculator(Double firstOperand, Double secondOperand, String operator) {
+        Double result = 0.0;
         switch (operator) {
-            case "+":
-                firstOperandDoubleValue = firstOperand.getDoubleToken();
-                secondOperandDoubleValue = secondOperand.getDoubleToken();
-                result = new Character(firstOperandDoubleValue + secondOperandDoubleValue);
+            case PLUS:
+                result = firstOperand + secondOperand;
                 break;
-            case "-":
-                firstOperandDoubleValue = firstOperand.getDoubleToken();
-                secondOperandDoubleValue = secondOperand.getDoubleToken();
-                result = new Character(secondOperandDoubleValue - firstOperandDoubleValue);
+            case MINUS:
+                result = secondOperand - firstOperand;
                 break;
-            case "*":
-                firstOperandDoubleValue = firstOperand.getDoubleToken();
-                secondOperandDoubleValue = secondOperand.getDoubleToken();
-                result = new Character(firstOperandDoubleValue * secondOperandDoubleValue);
+            case PRODUCT:
+                result = firstOperand * secondOperand;
                 break;
-            case "/":
-                firstOperandDoubleValue = firstOperand.getDoubleToken();
-                secondOperandDoubleValue = secondOperand.getDoubleToken();
-                result = new Character(secondOperandDoubleValue / firstOperandDoubleValue);
+            case DIVISION:
+                result = secondOperand / firstOperand;
                 break;
-            case "^":
+            case EXPONENT:
                 // TODO not quite right
-                firstOperandDoubleValue = firstOperand.getDoubleToken();
-                for (int i = 0; i < secondOperand.getDoubleToken() - 1; i++) {
-                    firstOperandDoubleValue *= firstOperandDoubleValue;
+                Double ans = 1.0;
+                if (secondOperand != 0) {
+                    Double absExponent = secondOperand > 0 ? secondOperand : (-1) * secondOperand;
+                    for (int i = 1; i <= absExponent; i++) {
+                        ans *= firstOperand;
+                    }
+                    if (secondOperand < 0) {
+                        // For negative exponent, must invert
+                        ans = 1.0 / ans;
+                    }
+                } else {
+                    // exponent is 0
+                    ans = 1.0;
                 }
-                result = new Character(firstOperandDoubleValue);
+                result = ans;
                 break;
             default:
                 System.out.println("ERROR: invalid operation");
-                result = new Character(0);
+                System.exit(1);
         }
-        //stack.push(result);
         return result;
     }
 
-    public Token getResult() {
-        return stack.peek();
+    public Double getResult() {
+        return stack.top();
     }
 }

@@ -20,6 +20,9 @@ public class ShuntingYard {
 
 
     private void SYAlgorithm(TokenList input) {
+        if (input.size() == 0) {
+            System.exit(0);
+        }
         while (index < input.size()) {
             if (input.get(index).tokenIsDouble()) {
                 output.add(input.get(index));

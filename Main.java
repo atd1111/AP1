@@ -8,24 +8,25 @@ public class Main implements CalculatorInterface {
 
     Main() {
         out = System.out;
+        in = new Scanner(System.in);
     }
 
     public TokenList readTokens(String input) {
         TokenList result = new CharacterList();
-        in = new Scanner(input);
-        while (in.hasNext()) {
-            if (in.hasNextDouble()) {
-                result.add(new Character(in.nextDouble()));
+        Scanner tokenScanner = new Scanner(input);
+        while (tokenScanner.hasNext()) {
+            if (tokenScanner.hasNextDouble()) {
+                result.add(new Character(tokenScanner.nextDouble()));
             } else {
-                result.add(new Character(in.next()));
+                result.add(new Character(tokenScanner.next()));
             }
         }
-        in.close();
+        tokenScanner.close();
         return result;
     }
 
     public Double rpn(TokenList tokens) {
-        return new Calculator(tokens).getResult().getDoubleToken();
+        return new Calculator(tokens).getResult();
     }
 
     public TokenList shuntingYard(TokenList tokens) {
@@ -34,7 +35,10 @@ public class Main implements CalculatorInterface {
 
     private void start() {
         //TODO  While there is input, read line and parse it.
-        out.println("result: "+rpn(shuntingYard(readTokens("6 * 6 * ( 5 + 3 ) / 8 - 12 / 6 * 4"))));
+        while (in.hasNextLine()) {
+            out.println("Result: "+rpn(shuntingYard(readTokens(in.nextLine()))));
+        }
+        in.close();
     }
 
     public static void main(String[] argv) {

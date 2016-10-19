@@ -8,7 +8,7 @@ public class Character implements Token {
                                 NO_PRECEDENCE = -1;
     private static final String[] OPERATOR_TOKENS = {"+","-","*","/","^"},
                                   PARENTHESIS_TOKENS = {"(",")"};
-    private static final String[][] PRECEDENCE_MATRIX = {{"+","-"},{"*","/","^"},PARENTHESIS_TOKENS};
+    private static final String[][] PRECEDENCE_MATRIX = {{"+","-"},{"*","/"},{"^"},PARENTHESIS_TOKENS};
 
     private double doubleToken;
     private boolean isDouble;
@@ -95,10 +95,8 @@ public class Character implements Token {
     }
 
     public boolean tokenIsOperator(Object token) {
-        //System.out.println("token is operator checking token: "+token.toString());
         for (int i = 0; i < OPERATOR_TOKENS.length; i++) {
             if (OPERATOR_TOKENS[i].equals(token)) {
-                //System.out.println("Operator!");
                 return true;
             }
         }
@@ -106,14 +104,11 @@ public class Character implements Token {
     }
 
     public boolean tokenIsParenthesis(Object token) {
-       // System.out.println("token is parenthesis checking token: "+token.toString());
         for (int i = 0; i < PARENTHESIS_TOKENS.length; i++) {
             if (PARENTHESIS_TOKENS[i].equals(token.toString())) {
-                //System.out.println("Parenthesis!");
                 return true;
             }
         }
-        //System.out.println("NOT Parenthesis!");
         return false;
 
     }
