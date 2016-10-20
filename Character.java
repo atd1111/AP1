@@ -10,7 +10,7 @@ public class Character implements Token {
                                   PARENTHESIS_TOKENS = {"(",")"};
     private static final String[][] PRECEDENCE_MATRIX = {{"+","-"},{"*","/"},{"^"},PARENTHESIS_TOKENS};
 
-    private double doubleToken;
+    private Double doubleToken;
     private boolean isDouble;
     private String operatorToken;
     private String parenthesisToken;
@@ -21,7 +21,7 @@ public class Character implements Token {
     }
 
     private void initializer() {
-        doubleToken = 0;
+        doubleToken = null;
         isDouble = false;
         operatorToken = "";
         parenthesisToken = "";
@@ -48,7 +48,7 @@ public class Character implements Token {
 
     @Override
     public String getValue() {
-        if (doubleToken != 0) {
+        if (doubleToken != null) {
             return "" + doubleToken;
         } else if (!operatorToken.isEmpty()) {
             return operatorToken;
@@ -59,7 +59,7 @@ public class Character implements Token {
 
     @Override
     public int getType() {
-        if (doubleToken != 0) {
+        if (doubleToken != null) {
             return 1;
         } else if (!operatorToken.isEmpty()) {
             return 2;

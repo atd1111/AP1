@@ -3,8 +3,8 @@ import java.util.Scanner;
 
 public class Main implements CalculatorInterface {
 
-    Scanner in;
-    PrintStream out;
+    private Scanner in;
+    private PrintStream out;
 
     Main() {
         out = System.out;
@@ -34,8 +34,8 @@ public class Main implements CalculatorInterface {
     }
 
     private void start() {
-        //TODO  While there is input, read line and parse it.
         while (in.hasNextLine()) {
+            // TODO %f (?) something for precision stuff
             out.println("Result: "+rpn(shuntingYard(readTokens(in.nextLine()))));
         }
         in.close();

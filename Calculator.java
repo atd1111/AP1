@@ -1,3 +1,4 @@
+import java.io.PrintStream;
 /**
  * Created by ATD on 13/09/2016.
  */
@@ -11,14 +12,14 @@ public class Calculator {
                                 DIVISION = "/",
                                 EXPONENT = "^";
 
-
     private OperandStack stack;
     private TokenList tokenList;
+    private PrintStream out;
 
     Calculator(TokenList tokenList) {
-        //stack = new Stack<>();
         stack = new OperandStack();
         this.tokenList = tokenList;
+        out = System.out;
         tokenReader();
     }
 
@@ -48,18 +49,21 @@ public class Calculator {
                 result = firstOperand * secondOperand;
                 break;
             case DIVISION:
-                result = secondOperand / firstOperand;
+                if (firstOperand == 0) {
+                    out.println("Invalid operation, cannot divide by 0");
+                    System.exit(0);
+                } else {
+                    result = secondOperand / firstOperand;
+                }
                 break;
             case EXPONENT:
-                // TODO not quite right
                 Double ans = 1.0;
-                if (secondOperand != 0) {
-                    Double absExponent = secondOperand > 0 ? secondOperand : (-1) * secondOperand;
+                if (firstOperand != 0) {
+                    Double absExponent = firstOperand > 0 ? firstOperand : (-1) * firstOperand;
                     for (int i = 1; i <= absExponent; i++) {
-                        ans *= firstOperand;
+                        ans *= secondOperand; // second operand
                     }
-                    if (secondOperand < 0) {
-                        // For negative exponent, must invert
+                    if (firstOperand < 0) {
                         ans = 1.0 / ans;
                     }
                 } else {
@@ -69,8 +73,8 @@ public class Calculator {
                 result = ans;
                 break;
             default:
-                System.out.println("ERROR: invalid operation");
-                System.exit(1);
+                out.println("ERROR: invalid operation");
+                System.exit(0);
         }
         return result;
     }

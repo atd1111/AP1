@@ -16,7 +16,6 @@ public class CharacterList implements TokenList {
         tokenArray =  tempArray;
     }
 
-    //TODO this is a mess
     @Override
     public void remove(int index) {
         if (index == tokenArray.length - 1) {
